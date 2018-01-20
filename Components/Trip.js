@@ -16,7 +16,7 @@ export default class Trip extends React.Component {
   }
 
   componentWillMount() {
-    console.log('trip props', this.props.schedule);
+    // console.log('trip props', this.props.schedule);
   }
 
   render() {
