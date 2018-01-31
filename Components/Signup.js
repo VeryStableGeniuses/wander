@@ -1,22 +1,12 @@
 import React from 'react';
-import { StyleSheet, ImageBackground, Image, AsyncStorage } from 'react-native';
+import { ImageBackground, AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { FormInput, Button } from 'react-native-elements';
 import axios from 'axios';
 import { NavigationActions } from 'react-navigation';
-import logo from '../img/logo.png';
 import Chicago from '../img/Chicago.jpg';
-import { keys } from '../config';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import { styles } from './Styles';
 
 export default class Signup extends React.Component {
   constructor() {
@@ -29,21 +19,19 @@ export default class Signup extends React.Component {
     this.signup = this.signup.bind(this);
   }
   signup() {
+    // We only need email, password, and username to create a user
     const user = {
       email: this.state.email,
       password: this.state.password,
       username: this.state.username,
     };
-    // this.props.navigation
-    //   .dispatch(NavigationActions.reset({
-    //     index: 0,
-    //     actions:
-    //       [NavigationActions.navigate({ routeName: 'GatherInterests' })],
-    //   }));
-    // Actual request commented out for testing purposes
     axios.post('http://18.218.102.64/signup', user)
       .then((res) => {
-        if (res.data !== 'User was not created') {
+        // If the user wasn't created, give the user the option to try again
+        if (res.data === 'User was not created') {
+          alert('There was a problem. Please try again');
+        // Otherwise, save their token and send them to GatherInterests
+        } else {
           AsyncStorage.setItem('Token', JSON.stringify(res.data));
           this.props.navigation
             .dispatch(NavigationActions.reset({
@@ -51,8 +39,6 @@ export default class Signup extends React.Component {
               actions:
                 [NavigationActions.navigate({ routeName: 'GatherInterests' })],
             }));
-        } else {
-          this.props.navigation.navigate('Signup');
         }
       })
       .catch((err) => {
@@ -72,44 +58,22 @@ export default class Signup extends React.Component {
         }}
         source={Chicago}
       >
-        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-          <Image source={logo} style={{ width: 200, height: 200, marginBottom: 30 }} />
+        <KeyboardAwareScrollView contentContainerStyle={styles.signupContainer}>
           <FormInput
-            style={{
-            height: 40,
-            width: 300,
-            borderColor: 'gray',
-            borderWidth: 1,
-            borderRadius: 6,
-            marginBottom: 5,
-          }}
+            style={styles.signupFormInput}
             keyboardType="email-address"
             onChangeText={text => this.setState({ email: text })}
             placeholder="Enter your email address"
             placeholderTextColor="white"
           />
           <FormInput
-            style={{
-            height: 40,
-            width: 300,
-            borderColor: 'gray',
-            borderWidth: 1,
-            borderRadius: 6,
-            marginBottom: 5,
-          }}
+            style={styles.signupFormInput}
             placeholder="Enter a username"
             placeholderTextColor="white"
             onChangeText={text => this.setState({ username: text })}
           />
           <FormInput
-            style={{
-            height: 40,
-            width: 300,
-            borderColor: 'gray',
-            borderWidth: 1,
-            borderRadius: 6,
-            marginBottom: 5,
-          }}
+            style={styles.signupFormInput}
             placeholder="Enter a password"
             placeholderTextColor="white"
             secureTextEntry

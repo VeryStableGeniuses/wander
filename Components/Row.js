@@ -6,12 +6,12 @@ import {
   Modal,
   AsyncStorage,
 } from 'react-native';
-import openMap from 'react-native-open-maps';
 import { Button, Icon, Text, Card } from 'react-native-elements';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import { TextField } from 'react-native-material-textfield';
-import axios from 'axios';
+import openMap from 'react-native-open-maps';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { keys } from '../config';
 import { styles, rowStyle } from './Styles';
 import { typeIds } from '../SampleData/Types';
@@ -38,10 +38,7 @@ export default class Row extends React.Component {
     if (this.props.data.placeId) {
       axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${this.props.data.placeId}&key=${keys.googleMapsAPI}`)
         .then((res) => {
-          this.setState({ extraData: res.data.result }, () => {
-            console.log(this.state.extraData);
-          });
-          // console.log(res.data);
+          this.setState({ extraData: res.data.result });
         })
         .catch(err => console.error('google api error', err));
     }
@@ -75,9 +72,6 @@ export default class Row extends React.Component {
             },
             data: { id_type: typeIds[type], like: false },
           })
-            .then((response) => {
-              // console.log(`user like post response ${response}`);
-            })
             .catch((err) => {
               console.error(`select interest post error ${err}`);
             });
@@ -94,23 +88,22 @@ export default class Row extends React.Component {
     this.setState({ modalVisible: false });
   }
 
-  _showDateTimePicker() {
+  showDateTimePicker() {
     this.setState({ isDateTimePickerVisible: true });
   }
 
-  _hideDateTimePicker() {
+  hideDateTimePicker() {
     this.setState({ isDateTimePickerVisible: false });
   }
 
-  _handleDatePicked(time) {
+  handleDatePicked(time) {
     this.setState({ time });
-    this._hideDateTimePicker();
+    this.hideDateTimePicker();
   }
 
   render() {
     const { data } = this.props;
     const { text } = this.state;
-    const { time } = this.state;
     const modalInfo = this.state.extraData || {};
     let openHoursText;
 
@@ -129,22 +122,19 @@ export default class Row extends React.Component {
           type="font-awesome"
           color="#f50"
           style={{ padding: 2 }}
-          onPress={() => {
-            this.openModal()
-            }
-          }
+          onPress={this.openModal}
         />
         <View>
           <Modal
             visible={this.state.modalVisible}
 
-            animationType={'slide'}
+            animationType="slide"
 
             onRequestClose={() => this.closeModal()}
           >
             <View style={styles.modalContainer}>
               <View style={styles.innerContainer}>
-                <Card title={modalInfo.name !== undefined ? modalInfo.name : '...loading'}> 
+                <Card title={modalInfo.name !== undefined ? modalInfo.name : '...loading'}>
                   <Text>Phone Number: {'\n'} {modalInfo.formatted_phone_number !== undefined ? modalInfo.formatted_phone_number : '...loading'}{'\n'}</Text>
                   <Text>Address: {'\n'} {modalInfo.formatted_address !== undefined ? modalInfo.formatted_address : '...loading'}{'\n'}</Text>
                   <Text>Open Hours
@@ -159,14 +149,14 @@ export default class Row extends React.Component {
                   </View>
                   <View>
                     <Button
-                      onPress={this._showDateTimePicker}
-                      title='pick a start time'
+                      onPress={this.showDateTimePicker}
+                      title="pick a start time"
                     />
                     <View>
                       <DateTimePicker
                         isVisible={this.state.isDateTimePickerVisible}
-                        onConfirm={this._handleDatePicked}
-                        onCancel={this._hideDateTimePicker}
+                        onConfirm={this.handleDatePicked}
+                        onCancel={this.hideDateTimePicker}
                         mode="time"
                       />
                     </View>
@@ -188,14 +178,15 @@ export default class Row extends React.Component {
             </View>
           </Modal>
         </View>
-
-
         <View style={{ flex: 1 }}>
           <Text style={styles.text}>{data.name}</Text>
         </View>
-        {/* <Image source={{uri: data.image}} style={styles.image} /> */}
-
       </Animated.View>
     );
   }
 }
+
+Row.propTypes = {
+  // name: PropTypes.string
+  data: PropTypes.object,
+};

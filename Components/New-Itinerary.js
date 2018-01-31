@@ -1,44 +1,20 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   AsyncStorage,
 } from 'react-native';
-import PropTypes from 'prop-types';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Header, Text, Button, Icon } from 'react-native-elements';
 import { NavigationActions } from 'react-navigation';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { keys } from '../config';
-import { exampleSchedule } from '../scheduleExample';
 import { getSchedule } from '../ScheduleMethods';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import { styles } from './Styles';
+import { months } from '../SampleData/Types';
 
 export default class NewItinerary extends React.Component {
   constructor() {
@@ -67,25 +43,27 @@ export default class NewItinerary extends React.Component {
 
   // Called when the user clicks the get itinerary button
   getItinerary() {
-    const { destination } = this.state;
-    const startDate = this.state.functionStartDate;
-    const endDate = this.state.functionEndDate;
+    // Get the necessary bits from the state
+    const { destination, functionStartDate, functionEndDate } = this.state;
+    // Add a loading circle, so that the user knows something's happening
     this.setState({ loading: true });
+    // Get the token from storage...
     AsyncStorage.getItem('Token')
       .then((res) => {
-        const savedToken = JSON.parse(res);
+        // Make a request to get the user's likes
         axios.get('http://18.218.102.64/user/likes', {
-          headers: { authorization: savedToken },
+          headers: { authorization: JSON.parse(res) },
         })
           .then((userLikes) => {
-            getSchedule(startDate, endDate, destination, userLikes.data, (schedule) => {
+            // Call the schedule builder function
+            getSchedule(functionStartDate, functionEndDate, destination, userLikes.data, (schedule) => {
               this.setState({ loading: false });
+              // Send the user to the edit Itinerary view with the returned schedule
               this.props.navigation.navigate('Itinerary', { dayInfo: schedule });
             });
           })
           .catch(err => console.error(err));
       });
-    // this.props.navigation.navigate('Itinerary', { dayInfo: exampleSchedule });
   }
 
   showStartDateTimePicker() {
@@ -105,6 +83,7 @@ export default class NewItinerary extends React.Component {
   }
 
   handleStartDatePicked(startDate) {
+    // I could pull in Moment, but this is easier
     const formattedDate = `${months[startDate.getMonth()]} ${startDate.getDate()}, ${startDate.getFullYear()} 00:00:00`;
     this.setState({ startDate });
     this.setState({ functionStartDate: formattedDate });
@@ -119,6 +98,7 @@ export default class NewItinerary extends React.Component {
   }
 
   searchPlaces(destination) {
+    // We need the city name to be in a very specific format for Google: New+York+City
     destination = destination.description
       .split('')
       .slice(0, destination.description.indexOf(','))
@@ -130,7 +110,7 @@ export default class NewItinerary extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.newItineraryContainer}>
         <Header
           statusBarProps={{ barStyle: 'light-content' }}
           outerContainerStyles={{ backgroundColor: '#0e416d', width: '100%' }}
@@ -146,7 +126,7 @@ export default class NewItinerary extends React.Component {
               }))}
           />}
         />
-        <View style={styles.container}>
+        <View style={styles.newItineraryContainer}>
           <GooglePlacesAutocomplete
             placeholder="Where are you Wandering?"
             minLength={2}

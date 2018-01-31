@@ -16,3 +16,56 @@ module.exports.typeIds = {
   stadium: 15,
   zoo: 16,
 };
+
+module.exports.typePlurals = {
+  amusement_park: 'Amusement parks',
+  aquarium: 'Aquariums',
+  art_gallery: 'Art galleries',
+  bowling_alley: 'Bowling alleys',
+  book_store: 'Book stores',
+  casino: 'Casinos',
+  clothing_store: 'Clothing stores',
+  point_of_interest: 'Points of interest',
+  shopping_mall: 'Shopping malls',
+  library: 'Libraries',
+  movie_theater: 'Movie theaters',
+  museum: 'Museums',
+  night_club: 'Night clubs',
+  park: 'Parks',
+  stadium: 'Stadiums',
+  zoo: 'Zoos',
+};
+
+module.exports.months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+module.exports.icons = {
+  amusement_park: 'fort-awesome',
+  aquarium: 'user-circle-o',
+  art_gallery: 'image',
+  bowling_alley: 'eercast',
+  book_store: 'book',
+  casino: 'money',
+  clothing_store: 'shopping-cart',
+  point_of_interest: 'building',
+  shopping_mall: 'shopping-bag',
+  library: 'book',
+  movie_theater: 'video-camera',
+  museum: 'building-o',
+  night_club: 'music',
+  park: 'users',
+  stadium: 'soccer-ball-o',
+  zoo: 'flag',
+};

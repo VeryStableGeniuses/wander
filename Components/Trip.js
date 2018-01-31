@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, Modal, AsyncStorage } from 'react-native';
 import { FormInput, Button } from 'react-native-elements';
 import QRCode from 'react-native-qrcode';
-import PropTypes from 'prop-types';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { styles } from './Styles';
 
 
@@ -20,7 +20,7 @@ export default class Trip extends React.Component {
   }
 
   handleTripSelect() {
-    // Commented out for testing purposes
+    // When a trip is clicked, get all of the events and send the user to the Itinerary page
     axios.get(`http://18.218.102.64/${this.props.schedule.id}/schedules`)
       .then((res) => {
         const datesSummary = res.data.reduce((seed, obj) => {
@@ -49,16 +49,15 @@ export default class Trip extends React.Component {
   }
 
   addByEmail() {
+    // Adds someone to a trip by entering their email
     const body = { userEmail: this.state.email, scheduleId: this.props.schedule.id };
     AsyncStorage.getItem('Token')
-      .then((token) => {
-        return axios({
-          url: 'http://18.218.102.64/join_schedule',
-          method: 'post',
-          headers: { authorization: JSON.parse(token) },
-          data: body,
-        });
-      })
+      .then(token => axios({
+        url: 'http://18.218.102.64/join_schedule',
+        method: 'post',
+        headers: { authorization: JSON.parse(token) },
+        data: body,
+      }))
       .then(() => {
         this.hideModal();
       })
@@ -93,9 +92,9 @@ export default class Trip extends React.Component {
                 borderRadius: 10,
               }}
               onPress={this.addByEmail}
-              title="Send request"
+              title="Add"
             />
-            <Text style={styles.tripModalText}>Share with QR code</Text>
+            <Text style={styles.tripModalText}>Or have your friend scan this QR code from their Wander app</Text>
             <QRCode
               value={this.props.schedule.id.toString()}
               size={200}
@@ -109,9 +108,8 @@ export default class Trip extends React.Component {
                 backgroundColor: '#0e416d',
                 borderRadius: 10,
               }}
-              icon={{ name: 'home', size: 32 }}
               onPress={() => this.hideModal()}
-              title="Back to homescreen"
+              title="Close"
             />
           </View>
         </Modal>
