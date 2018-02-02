@@ -7,6 +7,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Trip from './Trip';
 import goldenGate from '../img/GoldenGate.jpg';
+import logo from '../img/whiteLogo.png'
 import { styles } from './Styles';
 import { keys } from '../config';
 import { dashboardExample } from '../scheduleExample';
@@ -202,16 +203,16 @@ export default class Dashboard extends React.Component {
     return (
       <ImageBackground
         style={styles.dashboardImageBackground}
-        imageStyle={{ opacity: 0.3 }}
+        imageStyle={{ opacity: 0.5 }}
         source={goldenGate}
       >
         <Header
-          statusBarProps={{ barStyle: 'light-content' }}
-          outerContainerStyles={{ backgroundColor: '#0e416d' }}
-          centerComponent={{ text: 'wander', style: { color: '#fff', fontSize: 30 } }}
+          statusBarProps={{ barStyle: 'dark-content' }}
+          outerContainerStyles={{ backgroundColor: 'transparent' }}
+          centerComponent={{ text: 'wander', style: { color: 'black', fontSize: 30 } }}
           leftComponent={<Icon
             name="home"
-            color="#fff"
+            color="black"
           />}
         />
         <ScrollView contentContainerStyle={styles.dashboardContainer}>
@@ -223,7 +224,8 @@ export default class Dashboard extends React.Component {
             <Button
             small
             flat
-            buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.0)', borderRadius: 10, marginTop: 10, borderColor: 'black', borderWidth: 2 }}
+            color="black"
+            buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', borderRadius: 10, marginTop: 10, borderColor: 'black', borderWidth: 2 }}
 						title="Update Profile Picture"
             onPress={this._pickImage}
             underlayColor="rgba(255, 255, 255, 0.5)"
@@ -235,6 +237,7 @@ export default class Dashboard extends React.Component {
           <Button
             // large
             flat
+            color="black"
             buttonStyle={styles.newTripButton}
             title="Plan a new trip"
             onPress={() => this.props.navigation.navigate('NewItinerary')}
@@ -245,6 +248,7 @@ export default class Dashboard extends React.Component {
           <Button
             // large
             flat
+            color="black"
             buttonStyle={styles.QRButton}
             title="Scan a QR code"
             onPress={() => this.props.navigation.navigate('QRScanner')}
@@ -256,6 +260,7 @@ export default class Dashboard extends React.Component {
           <Button
             // large
             flat
+            color="black"
             buttonStyle={styles.signoutButton}
             title="Sign out"
             onPress={this.signout}

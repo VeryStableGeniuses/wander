@@ -26,7 +26,7 @@ module.exports.styles = StyleSheet.create({
   },
 
   profileButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
     marginTop: 10,
     borderColor: 'black',
@@ -40,7 +40,7 @@ module.exports.styles = StyleSheet.create({
   },
 
   viewTripButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
     alignSelf: 'flex-end',
     marginTop: 10,
@@ -57,7 +57,7 @@ module.exports.styles = StyleSheet.create({
   },
 
   newTripButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
     marginTop: 10,
     borderColor: 'black',
@@ -73,7 +73,7 @@ module.exports.styles = StyleSheet.create({
   },
 
   QRButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
     marginTop: 10,
     borderColor: 'black',
@@ -89,7 +89,7 @@ module.exports.styles = StyleSheet.create({
   },
 
   signoutButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
     marginTop: 10,
     borderColor: 'black',
@@ -141,7 +141,7 @@ module.exports.styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(127, 127, 127, 0.75)',
+    backgroundColor: 'rgba(127, 127, 127, 0.89)',
   },
   tripModalText: {
     color: 'white',
