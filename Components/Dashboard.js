@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Text, View, StyleSheet, ImageBackground, AsyncStorage, Alert, Image, ScrollView } from 'react-native';
 import { Button, Header, Icon } from 'react-native-elements';
@@ -77,6 +78,24 @@ export default class Dashboard extends React.Component {
       })
       .catch(error => console.error('error', error));
 
+<<<<<<< HEAD
+			AsyncStorage.getItem('Token')
+	      // Make a request to get the user's schedules from the database
+	      .then(res => {
+					// While we already have the token, we can get the user's profile picture in the same function
+					axios.get('http://18.218.102.64/photo', { headers: { authorization: JSON.parse(res) } })
+						.then((response) => {
+							let photo = response.data;
+							console.log('photo', photo);
+							if (photo) {
+								this.setState({ avatarUrl: photo.url });
+							}
+						})
+						.catch((error) => {
+							console.error(error);
+						});
+				});
+=======
       // While we already have the token, we can get the user's profile picture in the same function
       axios.get('http://18.218.102.64/photo')
         .then((response) => {
@@ -88,6 +107,7 @@ export default class Dashboard extends React.Component {
         .catch((error) => {
           console.error(error);
         });
+>>>>>>> d7dd216ea84e3b8f924ba708e611317d11080c55
   }
 
   acceptTrip(trip) {
@@ -175,8 +195,16 @@ export default class Dashboard extends React.Component {
 
       this.setState({ avatarUrl: s3Photo.url });
 
+<<<<<<< HEAD
+			AsyncStorage.getItem('Token')
+				.then((res) => {
+					axios.post('http://18.218.102.64/photo', s3Photo, { headers: { authorization: JSON.parse(res) } })
+						.catch((err) => console.error('Error posting image to db ', err));
+				});
+=======
 		axios.post('http://18.218.102.64/photo', s3Photo)
 			.catch((err) => console.error('Error posting image to db ', err));
+>>>>>>> d7dd216ea84e3b8f924ba708e611317d11080c55
 		});
 	};
 
