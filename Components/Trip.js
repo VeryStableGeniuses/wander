@@ -96,12 +96,14 @@ export default class Trip extends React.Component {
                 title="Add"
               />
               <Text style={styles.tripModalText}>Or have your friend scan this QR code from their Wander app</Text>
-              <QRCode
-                value={this.props.schedule.id.toString()}
-                size={200}
-                bgColor="black"
-                fgColor="white"
-              />
+              <View style= {{alignSelf: 'center', marginTop: 50}}>
+                <QRCode
+                  value={this.props.schedule.id.toString()}
+                  size={200}
+                  bgColor="black"
+                  fgColor="white"
+                />
+              </View>
               <Button
                 large
                 raised

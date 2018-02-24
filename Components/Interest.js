@@ -53,7 +53,7 @@ export default class Interest extends React.Component {
         flat
         buttonStyle={{
           backgroundColor: this.state.status ? '#0b81e8' : 'rgba(0,0,0,0.5)',
-          width: '95%',
+          width: 300,
           marginVertical: 5,
           borderRadius: 10,
           marginTop: 10,

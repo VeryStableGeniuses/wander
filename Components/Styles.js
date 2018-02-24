@@ -40,7 +40,7 @@ module.exports.styles = StyleSheet.create({
   },
 
   viewTripButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     borderRadius: 10,
     alignSelf: 'flex-end',
     marginTop: 10,
